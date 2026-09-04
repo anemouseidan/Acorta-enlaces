@@ -89,6 +89,21 @@ async function renderHistory() {
 
     const tr = document.createElement('tr');
 
+    const tdLink = document.createElement('td');
+    if (entry.shortUrl) {
+      const copyLinkBtn = document.createElement('button');
+      copyLinkBtn.className = 'ghost-btn small';
+      copyLinkBtn.textContent = 'Copiar enlace';
+      copyLinkBtn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(entry.shortUrl);
+        copyLinkBtn.textContent = 'Copiado';
+        setTimeout(() => (copyLinkBtn.textContent = 'Copiar enlace'), 1500);
+      });
+      tdLink.appendChild(copyLinkBtn);
+    } else {
+      tdLink.textContent = '—'; // enlaces guardados antes de este cambio no tienen shortUrl
+    }
+
     const tdTarget = document.createElement('td');
     tdTarget.className = 'truncate';
     tdTarget.title = entry.target;
@@ -100,7 +115,7 @@ async function renderHistory() {
     const tdDate = document.createElement('td');
     tdDate.textContent = new Date(entry.createdAt).toLocaleDateString();
 
-    tr.append(tdTarget, tdClicks, tdDate);
+    tr.append(tdLink, tdTarget, tdClicks, tdDate);
     historyBody.appendChild(tr);
   }
 }
@@ -132,7 +147,12 @@ form.addEventListener('submit', async (e) => {
       showError('El alias externo no esta disponible ahora mismo; se muestra el link normal (funciona igual).');
     }
 
-    saveToLocalHistory({ code, target: url, createdAt: new Date().toISOString() });
+    saveToLocalHistory({
+      code,
+      target: url,
+      shortUrl: externalUrl || internalUrl,
+      createdAt: new Date().toISOString(),
+    });
     urlInput.value = '';
     renderHistory();
   } catch (err) {
