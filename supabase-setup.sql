@@ -1,43 +1,36 @@
 -- ============================================================
--- Esquema para el acortador con dueño, historial y clics
+-- Esquema simplificado: sin login, acceso publico para crear
 -- ============================================================
 
-create table if not exists links (
+-- Si ya habias corrido la version anterior (con user_id), esto la
+-- reemplaza limpio. Si es un proyecto nuevo, no pasa nada, simplemente
+-- no encuentra nada que borrar.
+drop table if exists links cascade;
+
+create table links (
   code text primary key,
   target text not null,
-  user_id uuid not null default auth.uid() references auth.users(id),
   clicks integer not null default 0,
   created_at timestamptz not null default now()
 );
 
 alter table links enable row level security;
 
--- Solo un usuario autenticado (tú) puede crear enlaces.
--- Esto es lo que bloquea el spam de desconocidos.
-create policy "solo el dueno inserta"
+-- Cualquiera puede crear un enlace (el formulario corre en el navegador
+-- del visitante, sin cuenta de por medio).
+create policy "cualquiera puede insertar enlaces"
   on links for insert
-  to authenticated
-  with check (auth.uid() = user_id);
+  to anon
+  with check (true);
 
--- Solo el dueño puede LEER el listado completo (esto es tu "historial").
--- Los visitantes anónimos NO pueden leer la tabla directamente;
--- ellos usan la función get_target de abajo, que solo expone el destino.
-create policy "solo el dueno lee su historial"
-  on links for select
-  to authenticated
-  using (auth.uid() = user_id);
-
--- Solo el dueño puede borrar sus propios enlaces.
-create policy "solo el dueno borra"
-  on links for delete
-  to authenticated
-  using (auth.uid() = user_id);
+-- No hay politica de select publica: nadie puede leer la tabla completa
+-- desde el navegador. Se usan las funciones de abajo para lo puntual
+-- que hace falta (resolver un codigo, ver su contador de clics).
 
 -- ------------------------------------------------------------
--- Funciones públicas y controladas (para la página de espera)
+-- Funciones publicas y controladas
 -- ------------------------------------------------------------
 
--- Resuelve un código a su destino, sin exponer el resto de la tabla.
 create or replace function get_target(p_code text)
 returns text
 language sql
@@ -47,7 +40,15 @@ as $$
   select target from links where code = p_code;
 $$;
 
--- Suma un clic, sin dar permiso de escritura general sobre la tabla.
+create or replace function get_clicks(p_code text)
+returns integer
+language sql
+security definer
+set search_path = public
+as $$
+  select clicks from links where code = p_code;
+$$;
+
 create or replace function increment_clicks(p_code text)
 returns void
 language sql
@@ -58,4 +59,5 @@ as $$
 $$;
 
 grant execute on function get_target(text) to anon, authenticated;
+grant execute on function get_clicks(text) to anon, authenticated;
 grant execute on function increment_clicks(text) to anon, authenticated;

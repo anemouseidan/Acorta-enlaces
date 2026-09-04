@@ -79,9 +79,6 @@ button:hover { background: var(--accent-dark); }
 .hidden { display: none !important; }
 
 /* ---------- Panel principal (login) ---------- */
-#login-form { flex-direction: column; }
-#login-form input { text-align: left; }
-
 .wide { max-width: 640px; text-align: left; }
 .wide h1 { text-align: left; }
 

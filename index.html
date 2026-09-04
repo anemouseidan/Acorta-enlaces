@@ -7,27 +7,9 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- ============ Pantalla de login ============ -->
-  <main id="login-view" class="wrap">
+  <main class="wrap wide">
     <h1>acortador<span class="dot">.</span>link</h1>
-    <p class="sub">Inicia sesión para crear y administrar tus enlaces.</p>
-
-    <form id="login-form" class="shorten-form" autocomplete="on">
-      <input id="login-email" type="email" placeholder="Correo" required>
-      <input id="login-password" type="password" placeholder="Contraseña" required>
-      <button type="submit">Entrar</button>
-    </form>
-
-    <p id="login-error" class="error hidden"></p>
-  </main>
-
-  <!-- ============ Panel principal (tras iniciar sesión) ============ -->
-  <main id="app-view" class="wrap wide hidden">
-    <div class="topbar">
-      <h1>acortador<span class="dot">.</span>link</h1>
-      <button id="logout-btn" class="ghost-btn" type="button">Cerrar sesión</button>
-    </div>
+    <p class="sub">Pega tu enlace largo y obtén tu enlace para compartir.</p>
 
     <form id="form" class="shorten-form" autocomplete="off">
       <input
@@ -47,14 +29,13 @@
 
     <p id="error" class="error hidden"></p>
 
-    <h2 class="history-title">Tus enlaces</h2>
+    <h2 class="history-title">Tus enlaces (guardados en este navegador)</h2>
     <table class="history-table">
       <thead>
         <tr>
           <th>Destino</th>
           <th>Clics</th>
           <th>Creado</th>
-          <th></th>
         </tr>
       </thead>
       <tbody id="history-body"></tbody>
@@ -64,6 +45,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
-  <script src="app.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
