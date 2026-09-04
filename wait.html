@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparando tu enlace...</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap wait-wrap">
+
+    <!-- ===================================================== -->
+    <!-- ESPACIO PUBLICITARIO: coloca aquí tu código de anuncios -->
+    <div id="ad-slots" class="ad-slot-placeholder">Espacio publicitario</div>
+    <!-- ===================================================== -->
+
+    <p id="countdown-text">
+      Tu enlace estará listo en <span id="seconds">5</span> segundos…
+    </p>
+
+    <a id="go-btn" class="go-btn hidden" rel="noopener noreferrer">
+      IR AL LINK
+    </a>
+
+    <p id="invalid" class="error hidden">
+      Este enlace no es válido o está incompleto.
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="wait.js"></script>
+</body>
+</html>
