@@ -120,6 +120,18 @@ button:hover { background: var(--accent-dark); }
 /* ---------- Página de espera ---------- */
 .wait-wrap { max-width: 760px; }
 
+.smart-link-banner {
+  display: block;
+  padding: 10px;
+  margin-bottom: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
 .ad-slot-placeholder {
   min-height: 250px;
   display: flex;
