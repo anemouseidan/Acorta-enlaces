@@ -143,22 +143,33 @@ button:hover { background: var(--accent-dark); }
   margin-bottom: 28px;
 }
 
-.action-panel {
+.action-bar {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
   background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border-top: 1px solid var(--border);
+  padding: 16px 20px;
   text-align: center;
-  max-width: 90vw;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
 
-#countdown-text { color: var(--muted); font-size: 0.95rem; margin: 0 0 4px; }
+.bottom-bar-spacer { height: 140px; }
+
+.adblock-warning {
+  color: var(--danger);
+  background: var(--panel);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+#countdown-text { color: var(--muted); font-size: 0.95rem; margin: 0 0 8px; }
 #seconds { color: var(--accent); font-weight: 700; }
 
 .go-btn {
@@ -173,6 +184,33 @@ button:hover { background: var(--accent-dark); }
 }
 
 .go-btn:hover { background: var(--accent-dark); }
+
+/* Evita que un anuncio con ancho fijo mayor a la pantalla rompa el layout */
+iframe { max-width: 100%; }
+
+/* ---------- Computador (por defecto: pantallas anchas) ---------- */
+@media (min-width: 601px) {
+  .wide { max-width: 720px; }
+  .history-table-wrap { overflow-x: visible; }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+  .wrap { padding: 20px 16px; }
+  h1 { font-size: 1.6rem; }
+
+  .shorten-form { flex-direction: column; }
+  .result { flex-direction: column; }
+
+  /* La tabla de historial se desplaza horizontalmente en vez de romperse */
+  .history-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .history-table { min-width: 480px; }
+
+  .action-bar { padding: 12px 16px; }
+  .bottom-bar-spacer { height: 170px; }
+
+  .go-btn { display: block; width: 100%; padding: 14px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }

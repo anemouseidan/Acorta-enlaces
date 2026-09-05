@@ -35,20 +35,28 @@
 
     <!-- ===================================================== -->
 
-    <div class="action-panel">
-      <p id="countdown-text">
-        Tu enlace estará listo en <span id="seconds">5</span> segundos…
-      </p>
+    <p id="adblock-warning" class="adblock-warning hidden">
+      Detectamos un bloqueador de anuncios activo. Por favor desactívalo
+      para este sitio y recarga la página para continuar.
+    </p>
 
-      <a id="go-btn" class="go-btn hidden" rel="noopener noreferrer">
-        IR AL LINK
-      </a>
-
-      <p id="invalid" class="error hidden">
-        Este enlace no es válido o está incompleto.
-      </p>
-    </div>
+    <!-- Espaciador: evita que el contenido quede tapado por la barra fija de abajo -->
+    <div class="bottom-bar-spacer"></div>
   </main>
+
+  <div id="action-bar" class="action-bar hidden">
+    <p id="countdown-text">
+      Tu enlace estará listo en <span id="seconds">5</span> segundos…
+    </p>
+
+    <a id="go-btn" class="go-btn hidden" rel="noopener noreferrer">
+      IR AL LINK
+    </a>
+
+    <p id="invalid" class="error hidden">
+      Este enlace no es válido o está incompleto.
+    </p>
+  </div>
 
   <!-- Ventana emergente (popunder): se activa sola en cualquier clic de la página -->
   <script src="https://pl31176052.profitableratecpmnetwork.com/cc/8d/93/cc8d9357b7ed6d2fde264018b5e454fa.js"></script>
